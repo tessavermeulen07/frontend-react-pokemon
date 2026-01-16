@@ -7,4 +7,10 @@
     border: 1px solid black;
     width: 200px;
     margin: 20px;
+    height: 350px;
+    padding: 20px;
+}
+
+.pokemon-card-list {
+    list-style: none;
 }

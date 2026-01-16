@@ -28,29 +28,14 @@ function App() {
         <>
             <h1>Gotta catch em all!</h1>
 
-            {/*<ul className="list-container">*/}
-            {/*    {blogposts.map((blog) => {*/}
-            {/*            return <li key={blog.id}>*/}
-            {/*                <article className="list-item-container">*/}
-            {/*                    <span><Link to={`/blog/${blog.id}`}*/}
-            {/*                                element={<SingleBlog/>}>{blog.title}</Link> ({blog.author})</span>*/}
-            {/*                    <span>{blog.comments} reacties - {blog.shares} keer gedeeld</span>*/}
-            {/*                </article>*/}
-            {/*            </li>*/}
-            {/*        }*/}
-            {/*    )}*/}
-            {/*</ul>*/}
-
-            <ul>
+            <ul className="main-container">
                 {pokemon?.results?.length > 0 &&
                     (pokemon?.results?.map((pokemon) => {
                         return <li key={pokemon.name}>
                             <PokemonCard
-                                url={pokemon.url}
+                                url={pokemon.url} className="pokemon-card"
                             />
-
                         </li>
-
                     }))
                 }
             </ul>

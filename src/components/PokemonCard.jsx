@@ -24,12 +24,12 @@ function PokemonCard({url}) {
         <>
             {Object.keys(pokemon).length > 0 &&
                 <article className="pokemon-card">
-                    <span>{pokemon.name}</span>
+                    <h3>{pokemon.name}</h3>
                     <span><img src={pokemon.sprites.front_default} alt={pokemon.name} /></span>
                     <span>Moves: {pokemon.moves.length}</span>
                     <span>Weight: {pokemon.weight}</span>
                     <span>Abilities:</span>
-                    <ul>
+                    <ul className="pokemon-card-list">
                         {pokemon.abilities.map((ability) => (
                             <li key={ability.ability.name}>
                                 {ability.ability.name}
