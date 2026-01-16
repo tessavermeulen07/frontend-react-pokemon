@@ -14,3 +14,7 @@
 .pokemon-card-list {
     list-style: none;
 }
+
+.error-span {
+    color: red;
+}

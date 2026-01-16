@@ -1,14 +1,14 @@
 import './App.css'
 import axios from "axios";
 import {useEffect, useState} from "react";
-import pokemonCard from "./components/PokemonCard.jsx";
-import PokemonCard from "./components/PokemonCard.jsx";
+import PokemonCard from "./components/pokemonCard/PokemonCard.jsx";
+import Loading from "./components/loading/Loading.jsx";
 
 
 function App() {
 
     const [pokemon, setPokemon] = useState(null);
-    const [loading, toggleLoading] = useState (false);
+    const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
     const [currentURL, setCurrentURL] = useState('https://pokeapi.co/api/v2/pokemon/')
 
@@ -33,36 +33,45 @@ function App() {
 
     return (
         <>
-            <h1>Gotta catch em all!</h1>
+            {loading && <Loading/>}
+            {!loading && error && <span className="error-span">{error &&
+                <p>De Pokemon wilden niet laden. Probeer het later opnieuw</p>}
+            </span>}
+
+
             <div className="button-box">
                 <button
-                type="button"
-                disabled={pokemon?.previous === null}
-                    onClick={() => {setCurrentURL(pokemon?.previous);}}
+                    type="button"
+                    disabled={pokemon?.previous === null}
+                    onClick={() => {
+                        setCurrentURL(pokemon?.previous);
+                    }}
                 >
                     Vorige
                 </button>
 
                 <button
-                type="button"
-                disabled={pokemon?.next === null}
-                onClick={() => {setCurrentURL(pokemon?.next);}}
+                    type="button"
+                    disabled={pokemon?.next === null}
+                    onClick={() => {
+                        setCurrentURL(pokemon?.next);
+                    }}
                 >
                     Volgende
                 </button>
             </div>
 
-            <ul className="main-container">
-                {pokemon?.results?.length > 0 &&
-                    (pokemon?.results?.map((pokemon) => {
+            {!loading && !error && pokemon?.results?.length > 0 &&
+                <ul className="main-container">
+                    {pokemon?.results?.map((pokemon) => {
                         return <li key={pokemon.name}>
                             <PokemonCard
                                 url={pokemon.url} className="pokemon-card"
                             />
                         </li>
-                    }))
-                }
-            </ul>
+                    })}
+                </ul>}
+
         </>
     )
 }

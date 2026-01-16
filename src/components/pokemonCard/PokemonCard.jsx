@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import './PokemonCard.css';
+import Loading from "../loading/Loading.jsx"
 
 function PokemonCard({url}) {
 
     const [pokemon, setPokemon] = useState({});
-    const [loading, toggleLoading] = useState(false);
+    const [loading, toggleLoading] = useState(true);
     const [error, toggleError] = useState(false);
 
     async function singlePokemon() {
@@ -25,9 +26,20 @@ function PokemonCard({url}) {
         void singlePokemon();
     }, []);
 
+    useEffect(() => {
+        console.log('loading:', loading);
+    }, [loading]);
+
+    if (loading) return <Loading/>;
+    if (error) return <span className="error-span">{error &&
+        <p>De Pokemon wilden niet laden. Probeer het later opnieuw</p>}
+            </span>;
+    if(!pokemon) return null;
+
     return (
         <>
-            {Object.keys(pokemon).length > 0 &&
+
+           {Object.keys(pokemon).length > 0 &&
                 <article className="pokemon-card">
                     <h3>{pokemon.name}</h3>
                     <span><img src={pokemon.sprites.front_default} alt={pokemon.name}/></span>
@@ -41,8 +53,8 @@ function PokemonCard({url}) {
                             </li>
                         ))}
                     </ul>
-                </article>
-            }
+                </article>}
+
         </>
     )
 }
