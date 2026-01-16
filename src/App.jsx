@@ -6,28 +6,29 @@ import Loading from "./components/loading/Loading.jsx";
 
 
 function App() {
-
     const [pokemon, setPokemon] = useState(null);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
     const [currentURL, setCurrentURL] = useState('https://pokeapi.co/api/v2/pokemon/')
 
-    async function fetchPokemon() {
-        try {
-            toggleLoading(true);
-            toggleError(false);
-            const result = await axios.get(currentURL);
-            setPokemon(result.data);
-        } catch (error) {
-            toggleError(true);
-        } finally {
-            toggleLoading(false);
-        }
-    }
-
-
     useEffect(() => {
-        void fetchPokemon();
+        const controller = new AbortController();
+
+        async function fetchPokemon() {
+            try {
+                toggleLoading(true);
+                toggleError(false);
+                const result = await axios.get(currentURL, {
+                    signal: controller.signal,
+                });
+                setPokemon(result.data);
+            } catch (error) {
+                toggleError(true);
+            } finally {
+                toggleLoading(false);
+            }
+        }
+            void fetchPokemon();
     }, [currentURL]);
 
 

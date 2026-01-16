@@ -9,11 +9,14 @@ function PokemonCard({url}) {
     const [loading, toggleLoading] = useState(true);
     const [error, toggleError] = useState(false);
 
+    useEffect(() => {
+        const controller = new AbortController();
     async function singlePokemon() {
         try {
             toggleLoading(true);
             toggleError(false);
-            const result = await axios.get(url);
+            const result = await axios.get(url, {
+                signal:controller.signal});
             setPokemon(result.data);
         } catch (error) {
             toggleError(true);
@@ -21,8 +24,6 @@ function PokemonCard({url}) {
             toggleLoading(false);
         }
     }
-
-    useEffect(() => {
         void singlePokemon();
     }, []);
 
